@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+//parsing immutable calss with rest template
+//@value and @Data diff
 @Data
 @NoArgsConstructor
 public class EmployeeVO {

@@ -1,7 +1,7 @@
 package com.example.democrud.controller;
 
 import com.example.democrud.entity.User;
-import com.example.democrud.service.UserService;
+import com.example.democrud.serviceImpl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,71 +10,76 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(UserServiceImpl userServiceImpl) {
+        this.userServiceImpl = userServiceImpl;
     }
 
     @PostMapping("/addUser")
     public User addUser(@RequestBody User user){
-        return userService.saveUser(user);
+        return userServiceImpl.saveUser(user);
     }
     @PostMapping("/addUsers")
     public List<User> addUsers(@RequestBody List<User> users){
-        return userService.saveUsers(users);
+        return userServiceImpl.saveUsers(users);
     }
 
     @GetMapping("/users")
     public List<User> findAllUser(){
-        return userService.getUsers();
+        return userServiceImpl.getUsers();
     }
-    @GetMapping("/user/{id}")
+    @GetMapping("/users/{id}")
     public User findProductById(@PathVariable int id){
-        return userService.getUserById(id);
+        return userServiceImpl.getUserById(id);
     }
-    @GetMapping("/userByName/{name}")
+    @GetMapping("/users-by-name/{name}")
     public List<User> findProductByName(@PathVariable String name){
-        return userService.getUserByName(name);
+        return userServiceImpl.getUserByName(name);
     }
 
-    @PutMapping("/updateUser")
+    @PutMapping("/update-user")
     public User update(@RequestBody User user){
-        return userService.updateUser(user);
+        return userServiceImpl.updateUser(user);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable int id){
-        return userService.deleteUser(id);
+    @DeleteMapping("/delete-user/{id}")
+    public void deleteProduct(@PathVariable int id){
+         userServiceImpl.deleteUser(id);
     }
 
     //_______________________________________________
-    @GetMapping("/queryGetAllUser")
+    @GetMapping("/all-user-query")
     public List<User> query1(){
-        return userService.queryAllUser();
+        return userServiceImpl.queryAllUser();
     }
 
-    @GetMapping("/queryAllUserByName/{name}")
+    @PutMapping("/update-user-query")
+    public void queryUpdate(@RequestBody User user){
+        userServiceImpl.queryUpdateUser(user);
+    }
+
+    @GetMapping("/all-user-by-name-query/{name}")
     public List<User> query2(@PathVariable String name){
-        return userService.queryAllUserByName(name);
+        return userServiceImpl.queryAllUserByName(name);
     }
 
-    @GetMapping("/queryFindEmailByName/{name}")
+    @GetMapping("/email-by-name-query/{name}")
     public List<Object> query3(@PathVariable String name){
-        return userService.queryFindEmailByName(name);
+        return userServiceImpl.queryFindEmailByName(name);
     }
 
     //________________________________assigmenet---------
 
-    @GetMapping("/queryFindUserListByEmail")
+    @GetMapping("/result/find-users-by-email")
     public List<User> query4(){
-        return userService.consumeAPI();
+        return userServiceImpl.extractingDataFromApiMappingToUser();
     }
 
-    @GetMapping("/finalOutput")
+    @GetMapping("/result/find-phone-by-email")
     public List<Object> query5(){
-        return userService.consumeAPI2();
+        return userServiceImpl.extractingDataFromApiMappingToPhone();
     }
 
 
